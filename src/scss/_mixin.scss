@@ -1,0 +1,18 @@
+@mixin small {
+  @media screen and (min-width: 50rem) {
+    @content;
+  }
+}
+
+@mixin big {
+  @media screen and (min-width: 90rem) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media screen and (min-width: 60rem) {
+    @content;
+  }
+}
+
