@@ -2,8 +2,8 @@ const boulbi = document.getElementById('boulbi')
 const bergerac = document.getElementById('berg')
 const body = document.getElementById('body')
 const card = document.getElementById('card')
-const x = 52.52
-const y = 13.41
+const x = 48.84
+const y = 2.24
 const ville = 'Boulogne Billancourt'
 document.getElementById('localisation').textContent = ville
 
