@@ -46,7 +46,8 @@ if(nb==xy.length-1){
 else{
     nb++;
 }
-
+const temp = document.getElementById('iconTemp')
+const wind = document.getElementById('wind')
 document.getElementById('localisation').textContent =xy[nb].city;
 let x = xy[nb].x;
 let y = xy[nb].y; 
@@ -54,8 +55,9 @@ let y = xy[nb].y;
 fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto')
     .then((resp) => resp.json()
         .then((data) => {
-            
-            document.getElementById('temp').textContent = temperature(data.current_weather.temperature) + " °C";
+        temp.classList.remove('hidden')
+        wind.classList.remove('hidden')
+            document.getElementById('temp').textContent =  temperature(data.current_weather.temperature) + " °C";
             document.getElementById('code').textContent = weathercode(data.current_weather.weathercode);
             document.getElementById('speed').textContent = data.current_weather.windspeed + " km/h";
             document.getElementById('direction').textContent = 'Direction des vents : ' + oneDirection(data.current_weather.winddirection);
