@@ -63,9 +63,6 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y
 }
 setInterval(coordonnees,6000);
 
-
-
-
 function weathercode(code) {
     let result
     if (code < 1) {
