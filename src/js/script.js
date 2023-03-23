@@ -2,22 +2,68 @@ const boulbi = document.getElementById('boulbi')
 const bergerac = document.getElementById('berg')
 const body = document.getElementById('body')
 const card = document.getElementById('card')
-const x = 48.84
-const y = 2.24
-const ville = 'Boulogne Billancourt'
-document.getElementById('localisation').textContent = ville
 
+
+
+
+fetch('https://api.open-meteo.com/v1/forecast?latitude=28.00&longitude=17.00&current_weather=true&timezone=auto&=hourly=time')
+    .then((resp) => resp.json()
+        .then((data) => {
+            const now = new Date()
+            const annee = now.getFullYear()
+            const mois = now.getMonth()
+            const jour = now.getDate()
+            const heure = now.getHours()
+            const min = now.getMinutes()
+            const sec = now.getSeconds()
+            console.log(jour);
+            document.getElementById('code').textContent = `${jour} / ${mois} / ${annee}`
+            document.getElementById('miseajour').textContent = `${heure}:${min}`;
+        }));
+
+
+
+let nb=-1;
+const xy = [
+    { city: 'Boulogne Billancourt', 
+        x : 48.84, 
+        y : 2.24, 
+    },
+    { city: 'Libye', 
+        x :28.00, 
+        y : 17.00,
+    },
+    { city: 'Antarctique', 
+        x :80.22, 
+        y : 77.21,
+    },
+];
+
+function coordonnees(){
+if(nb==xy.length-1){
+    nb=0;
+}
+else{
+    nb++;
+}
+
+document.getElementById('localisation').textContent =xy[nb].city;
+let x = xy[nb].x;
+let y = xy[nb].y; 
 
 fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto')
     .then((resp) => resp.json()
         .then((data) => {
-            console.log(data);
             document.getElementById('temp').textContent = data.current_weather.temperature + " °C";
             document.getElementById('code').textContent = weathercode(data.current_weather.weathercode);
             document.getElementById('speed').textContent = data.current_weather.windspeed + " km/h";
             document.getElementById('direction').textContent = 'Direction des vents : ' + oneDirection(data.current_weather.winddirection);
             document.getElementById('miseajour').textContent = 'Dernière mise à jour : ' + convertISO(data.current_weather.time);
         }))
+}
+setInterval(coordonnees,6000);
+
+
 
 
 function weathercode(code) {
