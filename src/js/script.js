@@ -54,7 +54,8 @@ let y = xy[nb].y;
 fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto')
     .then((resp) => resp.json()
         .then((data) => {
-            document.getElementById('temp').textContent = data.current_weather.temperature + " °C";
+            
+            document.getElementById('temp').textContent = temperature(data.current_weather.temperature) + " °C";
             document.getElementById('code').textContent = weathercode(data.current_weather.weathercode);
             document.getElementById('speed').textContent = data.current_weather.windspeed + " km/h";
             document.getElementById('direction').textContent = 'Direction des vents : ' + oneDirection(data.current_weather.winddirection);
@@ -62,6 +63,7 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y
         }))
 }
 setInterval(coordonnees,6000);
+
 
 function weathercode(code) {
     let result
@@ -72,7 +74,7 @@ function weathercode(code) {
     }
     else if (code > 0 && code < 4) {
         result = "Nuageux",
-            card.style.backgroundImage = "url(https://i.gifer.com/fzmZ.gif)";
+            card.style.backgroundImage = "url(https://i.gifer.com/srG.gif)";
         body.style.backgroundColor = "rgb(124, 136, 152)";
     }
     else if (code > 44 && code < 49) {
@@ -82,7 +84,7 @@ function weathercode(code) {
     }
     else if (code > 50 && code < 56) {
         result = "Bruine légère"
-        card.style.backgroundImage = "url(https://i.gifer.com/19Q3.gif)";
+        card.style.backgroundImage = "url(https://i.gifer.com/srG.gif)";
         body.style.backgroundColor = "rgb(174, 179, 184))";
     }
     else if (code > 55 && code < 57) {
@@ -131,6 +133,28 @@ function weathercode(code) {
         body.style.backgroundColor = "rgb(51, 68, 78)";
     }
     else { result = 'Inconnue' }
+    return result
+}
+function temperature (degre){
+    let result
+    if (degre < 5 ) {
+        result = degre
+        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088445622983606392/tresFroid.jpg)";
+    }
+
+    else if (degre > 5 && degre < 14 ) {
+        result = degre
+        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088473811256627270/froidLeger-15611325.jpg)";
+    }
+    else if (degre > 15 && degre < 18 ) {
+        result = degre
+        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088473690544549938/froidMoyen-618833.jpg)";
+    }
+    else if (degre > 19 ) {
+        result = degre
+        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088476161677471836/ete.jpg)";
+    }
+    else  { result = degre}
     return result
 }
 
