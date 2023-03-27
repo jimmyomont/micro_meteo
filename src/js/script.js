@@ -1,14 +1,12 @@
-const boulbi = document.getElementById('boulbi')
-const bergerac = document.getElementById('berg')
-const body = document.getElementById('body')
-const card = document.getElementById('card')
-
-
-
-
-fetch('https://api.open-meteo.com/v1/forecast?latitude=28.00&longitude=17.00&current_weather=true&timezone=auto&=hourly=time')
-    .then((resp) => resp.json()
-        .then((data) => {
+// http://erikflowers.github.io/weather-icons 
+const time = document.getElementById('Time')
+const location = document.getElementById('location')
+const temp = document.getElementById('temp')
+const weatherCode = document.getElementById('coverage')
+const rain = document.getElementById('rain')
+// const icon = document.getElementById('icon')
+const wi = document.querySelector('.wi')
+console.log(wi);
             const now = new Date()
             const annee = now.getFullYear()
             const mois = now.getMonth()
@@ -17,27 +15,28 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=28.00&longitude=17.00&cur
             const min = now.getMinutes()
             const sec = now.getSeconds()
             console.log(jour);
-            document.getElementById('code').textContent = `${jour} / ${mois} / ${annee}`
-            document.getElementById('miseajour').textContent = `${heure}:${min}`;
-        }));
-
-
+            // document.getElementById('code').textContent = `${jour} / ${mois} / ${annee}`
+            // document.getElementById('Time').textContent = heure + " : " + min
 
 let nb=-1;
 const xy = [
     { city: 'Boulogne Billancourt', 
-        x : 48.84, 
-        y : 2.24, 
+        x : '48.84', 
+        y : '2.24', 
     },
     { city: 'Libye', 
-        x :28.00, 
-        y : 17.00,
+        x :'28.00', 
+        y : '17.00',
     },
     { city: 'Antarctique', 
-        x :80.22, 
-        y : 77.21,
+        x :'80.22', 
+        y : '77.21',
     },
 ];
+
+
+
+
 
 function coordonnees(){
 if(nb==xy.length-1){
@@ -46,93 +45,88 @@ if(nb==xy.length-1){
 else{
     nb++;
 }
-const temp = document.getElementById('iconTemp')
-const wind = document.getElementById('wind')
-document.getElementById('localisation').textContent =xy[nb].city;
+document.getElementById('location').textContent =xy[nb].city;
 let x = xy[nb].x;
 let y = xy[nb].y; 
-
-fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto')
-    .then((resp) => resp.json()
-        .then((data) => {
-        temp.classList.remove('hidden')
-        wind.classList.remove('hidden')
-            document.getElementById('temp').textContent =  temperature(data.current_weather.temperature) + " °C";
-            document.getElementById('code').textContent = weathercode(data.current_weather.weathercode);
-            document.getElementById('speed').textContent = data.current_weather.windspeed + " km/h";
-            document.getElementById('direction').textContent = 'Direction des vents : ' + oneDirection(data.current_weather.winddirection);
-            document.getElementById('miseajour').textContent = 'Dernière mise à jour : ' + convertISO(data.current_weather.time);
-        }))
+apiMeteo(x , y)
 }
 setInterval(coordonnees,6000);
 
+let apiMeteo = function(x , y){
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto&hourly=precipitation_probability&forecast_days=1&timezone=auto')
+    .then((resp) => resp.json()
+        .then((data) => {
+            console.log(data);
+            document.getElementById('temp').textContent = data.current_weather.temperature + " °C";
+            weatherCode.textContent = weathercode(data.current_weather.weathercode);
+            document.getElementById('wind').textContent = data.current_weather.windspeed + " km/h";
+            document.getElementById('rain').textContent = data.hourly.precipitation_probability[heure] + " %";
+            console.log(data.hourly.precipitation_probability[heure]);
+            // document.getElementById('rain').textContent = data.hourly.precipitation_probability;
+            // document.getElementById('rain').textContent = convertISO(data.hourly.time);
+            document.getElementById('miseajour').textContent = 'Mise à jour : ' + convertISO(data.current_weather.time);
+        }))
+}
 
+// function propability(pourcent) {
+//     for (const iterator of object) {
+        
+//     }
+// }
+        
 function weathercode(code) {
     let result
     if (code < 1) {
         result = "Ciel clair"
-        card.style.backgroundImage = "url(https://i.gifer.com/Lx0q.gif)";
-        body.style.backgroundColor = "rgb(57, 135, 237)";
+        icon.className = 'wi wi-day-sunny'
     }
     else if (code > 0 && code < 4) {
-        result = "Nuageux",
-            card.style.backgroundImage = "url(https://i.gifer.com/srG.gif)";
-        body.style.backgroundColor = "rgb(124, 136, 152)";
+        result = "Nuageux"
+        icon.className = 'wi wi-cloud'
     }
     else if (code > 44 && code < 49) {
         result = "Brouillard"
-        card.style.backgroundImage = "url(https://i.gifer.com/7Z6Q.gif)";
-        body.style.backgroundColor = "rgb(110, 125, 145)";
+        icon.className = 'wi wi-fog'
     }
     else if (code > 50 && code < 56) {
         result = "Bruine légère"
-        card.style.backgroundImage = "url(https://i.gifer.com/srG.gif)";
-        body.style.backgroundColor = "rgb(174, 179, 184))";
+        icon.className = 'wi wi-sleet'
     }
     else if (code > 55 && code < 57) {
         result = "Bruine verglaçante"
-        card.style.backgroundImage = "url(https://i.gifer.com/19Q1.gif)";
-        body.style.backgroundColor = "rgb(43, 67, 52)";
+        icon.className = 'wi wi-snowflake-cold'
     }
     else if (code > 60 && code < 66) {
         result = "Pluie faible"
-        card.style.backgroundImage = "url(https://i.gifer.com/IxI.gif)";
-        body.style.backgroundColor = "rgb(15, 92, 45)";
+        icon.className = 'wi wi-showers'
     }
     else if (code > 65 && code < 68) {
         result = "Pluie verglaçante"
-        card.style.backgroundImage = "url(https://i.gifer.com/7st6.gif)";
-        body.style.backgroundColor = "rgb(180, 192, 185)";
+        icon.className = 'wi wi-snowflake-cold'
     }
     else if (code > 70 && code < 76) {
         result = "Chute de neige"
-        card.style.backgroundImage = "url(https://i.gifer.com/V5N.gif)";
-        body.style.backgroundColor = "rgb(54, 56, 55)";
+        icon.className = 'wi wi-snow-wind'
     }
     else if (code === 77) {
         result = "Grains de neige"
-        card.style.backgroundImage = "url(https://i.gifer.com/4ht7.gif)";
-        body.style.backgroundColor = "rgb(38, 38, 41)";
+        icon.className = 'wi wi-rain-mix'
     }
     else if (code > 79 && code < 83) {
         result = "Averse de pluie"
-        card.style.backgroundImage = "url(https://i.gifer.com/GWkS.gif)";
-        body.style.backgroundColor = "rgb(34, 40, 24)";
+        icon.className = 'wi wi-rain'
     }
     else if (code > 84 && code < 87) {
         result = "Averse de neige"
-        card.style.backgroundImage = "url(https://i.gifer.com/4VOA.gif)";
-        body.style.backgroundColor = "rgb(164, 169, 172)";
+        icon.className = 'wi wi-snow'
     }
     else if (code === 95) {
         result = "orage"
-        card.style.backgroundImage = "url(https://i.gifer.com/Pl9O.gif)";
-        body.style.backgroundColor = "rgb(2, 39, 61)";
+        icon.className = 'wi wi-lightning'
     }
     else if (code > 95 && code < 100) {
         result = "Orage avec grêle"
-        card.style.backgroundImage = "url(https://i.gifer.com/Rnim.gif)";
-        body.style.backgroundColor = "rgb(51, 68, 78)";
+        icon.className = 'wi wi-storm-showers'
     }
     else { result = 'Inconnue' }
     return result
@@ -141,20 +135,24 @@ function temperature (degre){
     let result
     if (degre < 5 ) {
         result = degre
-        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088445622983606392/tresFroid.jpg)";
+        // card.style.border = "rgb(135, 212, 226) 10px solid";
+        // body.style.backgroundColor = "rgb(135, 212, 226)";
     }
 
     else if (degre > 5 && degre < 14 ) {
         result = degre
-        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088473811256627270/froidLeger-15611325.jpg)";
+        // card.style.border = "rgb(79, 169, 185) 10px solid";
+        // body.style.backgroundColor = "rgb(79, 169, 185)";
     }
     else if (degre > 15 && degre < 18 ) {
         result = degre
-        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088473690544549938/froidMoyen-618833.jpg)";
+        // card.style.border = "rgb(209, 133, 40) 10px solid";
+        // body.style.backgroundColor = "rgb(209, 133, 40)";
     }
     else if (degre > 19 ) {
         result = degre
-        body.style.backgroundImage = "url(https://cdn.discordapp.com/attachments/1041659929058103368/1088476161677471836/ete.jpg)";
+        // card.style.border = "rgb(232, 29, 22) 10px solid"
+        // body.style.backgroundColor = "rgb(232, 29, 22)"
     }
     else  { result = degre}
     return result
@@ -220,3 +218,8 @@ function convertISO(time) {
     return result
 }
 
+fetch('https://api.open-meteo.com/v1/forecast?latitude=28.00&longitude=17.00&current_weather=true&timezone=auto&=hourly=time')
+    .then((resp) => resp.json()
+        .then((data) => {
+
+        }));
