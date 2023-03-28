@@ -7,8 +7,9 @@ const temp = document.getElementById('temp')
 const weatherCode = document.getElementById('coverage')
 const rain = document.getElementById('rain')
 const now = new Date()
+const fuseauH = document.getElementById('fuseau')
 const heure = now.getHours()
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
 document.getElementById('div_date').textContent = now.toLocaleDateString(undefined, options)
 
@@ -20,15 +21,17 @@ function coordonnees() {
         nb++;
     }
     document.getElementById('location').textContent = xy[nb].city;
+    fuseauH.textContent = xy[nb].fuseau;
     let x = xy[nb].x;
     let y = xy[nb].y;
     apiMeteo(x, y)
 }
 let nb = -1;
 let apiMeteo = function (x, y) {
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto&hourly=precipitation_probability&forecast_days=1&timezone=auto')
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto&timezone=auto&hourly=precipitation_probability&forecast_days=1&timezone=auto')
         .then((resp) => resp.json()
             .then((data) => {
+
                 temp.textContent = data.current_weather.temperature + " °C";
                 weatherCode.textContent = weathercode(data.current_weather.weathercode);
                 document.getElementById('wind').textContent = data.current_weather.windspeed;
