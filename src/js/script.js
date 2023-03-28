@@ -3,13 +3,12 @@ import weathercode from './weatherCode'
 import xy from './dataCoordonnees'
 import oneDirection from './winDirection'
 import temperature from './temperature'
-const time = document.getElementById('Time')
 const temp = document.getElementById('temp')
 const weatherCode = document.getElementById('coverage')
 const rain = document.getElementById('rain')
 const now = new Date()
+const heure = now.getHours()
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
 
 document.getElementById('div_date').textContent = now.toLocaleDateString(undefined, options)
 
@@ -51,4 +50,5 @@ function myHorloge() {
     const date = new Date();
     document.getElementById("div_horloge").textContent = date.toLocaleTimeString();
 }
-const horloge = setInterval(myHorloge, 1000);
+myHorloge()
+setInterval(myHorloge, 1000);
