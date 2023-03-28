@@ -34,7 +34,7 @@ const xy = [
     },
     {
         city: 'Antarctique',
-        x: '80.22',
+        x: '-80.22',
         y: '77.21',
     },
 ];
@@ -56,7 +56,7 @@ function coordonnees() {
     apiMeteo(x, y)
 }
 
-setInterval(coordonnees, 4000);
+
 
 let apiMeteo = function (x, y) {
     fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto&hourly=precipitation_probability&forecast_days=1&timezone=auto')
@@ -72,12 +72,10 @@ let apiMeteo = function (x, y) {
                 document.getElementById('miseajour').textContent = 'Mise à jour : ' + convertISO(data.current_weather.time);
             }))
 }
-setTimeout(apiMeteo,100)
-// function propability(pourcent) {
-//     for (const iterator of object) {
 
-//     }
-// }
+coordonnees()
+setInterval(coordonnees, 4000);
+
 
 function weathercode(code) {
     let result
