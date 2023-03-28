@@ -6,19 +6,19 @@ const xy = [
         fuseau : new Intl.DateTimeFormat('fr', { timeStyle: 'long', timeZone: 'Europe/Paris' }).format(new Date())
     },
     {
-        city: 'Libye',
-        x: '28.00',
-        y: '17.00',
-        fuseau : new Intl.DateTimeFormat('fr', { timeStyle: 'long', timeZone: 'Africa/Tripoli' }).format(new Date())
+        city: 'Dallol, Ethiopie',
+        x: '14.24',
+        y: '40.28',
+        fuseau : new Intl.DateTimeFormat('fr', { timeStyle: 'long', timeZone: 'Africa/Addis_Ababa' }).format(new Date())
     },
     {
-        city: 'Antarctique',
+        city: 'Dôme A, Antarctique',
         x: '-80.22',
         y: '77.21',
         fuseau : new Intl.DateTimeFormat('fr', { timeStyle: 'long', timeZone: 'Antarctica/McMurdo' }).format(new Date())
     },
     {
-        city: 'Vienne',
+        city: 'Vienne, Autriche',
         x: '48.21',
         y: '16.37',
         fuseau :new Intl.DateTimeFormat('fr', { timeStyle: 'long', timeZone: 'Europe/Vienna' }).format(new Date())

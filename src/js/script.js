@@ -50,8 +50,12 @@ function convertISO(time) {
 }
 
 function myHorloge() {
+
     const date = new Date();
     document.getElementById("div_horloge").textContent = date.toLocaleTimeString();
+    const testt = date.toLocaleTimeString()
+    const test = Intl.DateTimeFormat({timeZone:'Australia/Sydney' }).format(testt)
+    console.log(test);
 }
 myHorloge()
 setInterval(myHorloge, 1000);
