@@ -31,7 +31,7 @@ let apiMeteo = function (x, y) {
             .then((data) => {
                 temp.textContent = data.current_weather.temperature + " °C";
                 weatherCode.textContent = weathercode(data.current_weather.weathercode);
-                document.getElementById('wind').textContent = data.current_weather.windspeed + " km/h";
+                document.getElementById('wind').textContent = data.current_weather.windspeed;
                 rain.textContent = data.hourly.precipitation_probability[heure] + " %";
                 document.getElementById('miseajour').textContent = 'Mise à jour : ' + convertISO(data.current_weather.time);
             }))

@@ -14,6 +14,11 @@ const xy = [
         x: '-80.22',
         y: '77.21',
     },
+    {
+        city: 'Vienne',
+        x: '48.21',
+        y: '16.37',
+    },
 ];
 
 export default xy ; 

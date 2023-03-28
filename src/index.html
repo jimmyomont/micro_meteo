@@ -2,66 +2,57 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="scss/index.scss">
-    <script src="js/script.js" type="module" defer></script>
-    <title>météo</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="scss/index.scss">
+  <script src="js/script.js" type="module" defer></script>
+  <title>météo</title>
 </head>
 
 <body id="body">
-  
 
-<header>
-</header>
+  <header>
+    <h1>Micro-météo locale avec alternance du pays le plus chaud au pays le plus froid </h1>
+    <h2 id="div_date"></h2>
+    <h2 id="div_horloge"></h2>
+  </header>
 
-<main>
-<article>
-  <h1>Micro-météo locale avec alternance du pays le plus chaud au pays le plus froid </h1>
-      <h2 id="div_date"></h2>
-      <h2 id="div_horloge"></h2>
-    <div class="Weather row center">
+  <main>
 
-        <div class="Weather__main column column-center split-center"> <!-- Begin Main Bubble -->
-          
-          <h3>Météo Actuelle</h3>
-          <h2 id="location">Votre Micro-météo</h2>
-          <span id="temp"></span>
-          <div class="row center column-center Weather__main-toggle">
-
-            <!-- <button id="unit-switch"><span id="unit-toggle"></span></button> -->
-            <!-- <span>C</span> -->
-          </div> 
-          
-        </div> <!-- End Main Bubble -->
-        
-        <div class="Weather__right column-split"> <!-- Begin Right Side Bubbles -->
-          
-          <div class="Weather__right-icon"> <!-- Begin Icon Bubble -->
-            <div class="column column-center"> <!-- Begin Current Coverage -->
-              <i id="icon"></i>
-              <span id="coverage">Temp</span>
-              
-            </div> <!-- End Current Coverage -->
-          </div> <!-- End Icon Bubble -->
-          <div class="Weather__right-time column center column-center"> <!-- Begin Time Bubble -->
-            <p>Pluie</p>
-            <span id="rain"></span>
-          </div> <!-- End Time Bubble -->
-          
-          <div  class="Weather__right-refresh column center column-center">
-          <p>Vent</p>
-          <p id="wind"></p>
-          </div>
-          
-        </div> <!-- End Right Side Bubbles -->
+  <section class="Weather row center">
+    <div class="Weather__main column column-center split-center">
+      <h3>Météo Actuelle</h3>
+      <h2 id="location">Votre Micro-météo</h2>
+      <span id="temp"></span>
+      <div class="row center column-center Weather__main-toggle">
       </div>
-      <span id="miseajour"></span>
+    </div>
 
-</article>
-</main>
-    
+    <div class="Weather__right column-split">
+        <div class="Weather__right-icon">
+          <div class="column column-center">
+            <i id="icon"></i>
+            <span id="coverage"></span>
+          </div>
+        </div>
+
+      <div class="Weather__right-time column center column-center">
+        <p>Pluie</p>
+        <span id="rain"></span>
+      </div>
+
+      <div class="Weather__right-refresh column center column-center">
+        <p>Vent</p>
+        <p id="wind"></p>
+        <p>km/h</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+  <footer>
+    <span id="miseajour"></span>    
+  </footer>
 </body>
-
 </html>
