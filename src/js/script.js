@@ -6,31 +6,36 @@ const weatherCode = document.getElementById('coverage')
 const rain = document.getElementById('rain')
 // const icon = document.getElementById('icon')
 const wi = document.querySelector('.wi')
-console.log(wi);
-            const now = new Date()
-            const annee = now.getFullYear()
-            const mois = now.getMonth()
-            const jour = now.getDate()
-            const heure = now.getHours()
-            const min = now.getMinutes()
-            const sec = now.getSeconds()
-            console.log(jour);
-            // document.getElementById('code').textContent = `${jour} / ${mois} / ${annee}`
-            // document.getElementById('Time').textContent = heure + " : " + min
 
-let nb=-1;
+const now = new Date()
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+// console.log(now.toLocaleDateString(undefined, options));
+// console.log(now.toLocaleTimeString('en-US'))
+// console.log(toLocaleTimeString('en-US'));
+const annee = now.getFullYear()
+const mois = now.getMonth()
+const jour = now.getDate()
+const heure = now.getHours()
+const min = now.getMinutes()
+const sec = now.getSeconds()
+document.getElementById('div_date').textContent = now.toLocaleDateString(undefined, options)
+// document.getElementById('Time').textContent = heure + " : " + min
+let nb = -1;
 const xy = [
-    { city: 'Boulogne Billancourt', 
-        x : '48.84', 
-        y : '2.24', 
+    {
+        city: 'Boulogne Billancourt',
+        x: '48.84',
+        y: '2.24',
     },
-    { city: 'Libye', 
-        x :'28.00', 
-        y : '17.00',
+    {
+        city: 'Libye',
+        x: '28.00',
+        y: '17.00',
     },
-    { city: 'Antarctique', 
-        x :'80.22', 
-        y : '77.21',
+    {
+        city: 'Antarctique',
+        x: '80.22',
+        y: '77.21',
     },
 ];
 
@@ -38,42 +43,42 @@ const xy = [
 
 
 
-function coordonnees(){
-if(nb==xy.length-1){
-    nb=0;
+function coordonnees() {
+    if (nb == xy.length - 1) {
+        nb = 0;
+    }
+    else {
+        nb++;
+    }
+    document.getElementById('location').textContent = xy[nb].city;
+    let x = xy[nb].x;
+    let y = xy[nb].y;
+    apiMeteo(x, y)
 }
-else{
-    nb++;
-}
-document.getElementById('location').textContent =xy[nb].city;
-let x = xy[nb].x;
-let y = xy[nb].y; 
-apiMeteo(x , y)
-}
-setInterval(coordonnees,6000);
 
-let apiMeteo = function(x , y){
+setInterval(coordonnees, 4000);
+
+let apiMeteo = function (x, y) {
     fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto&hourly=precipitation_probability&forecast_days=1&timezone=auto')
-    .then((resp) => resp.json()
-        .then((data) => {
-            console.log(data);
-            document.getElementById('temp').textContent = data.current_weather.temperature + " °C";
-            weatherCode.textContent = weathercode(data.current_weather.weathercode);
-            document.getElementById('wind').textContent = data.current_weather.windspeed + " km/h";
-            document.getElementById('rain').textContent = data.hourly.precipitation_probability[heure] + " %";
-            console.log(data.hourly.precipitation_probability[heure]);
-            // document.getElementById('rain').textContent = data.hourly.precipitation_probability;
-            // document.getElementById('rain').textContent = convertISO(data.hourly.time);
-            document.getElementById('miseajour').textContent = 'Mise à jour : ' + convertISO(data.current_weather.time);
-        }))
-}
+        .then((resp) => resp.json()
+            .then((data) => {
 
+                document.getElementById('temp').textContent = data.current_weather.temperature + " °C";
+                weatherCode.textContent = weathercode(data.current_weather.weathercode);
+                document.getElementById('wind').textContent = data.current_weather.windspeed + " km/h";
+                document.getElementById('rain').textContent = data.hourly.precipitation_probability[heure] + " %";
+                // document.getElementById('rain').textContent = data.hourly.precipitation_probability;
+                // document.getElementById('rain').textContent = convertISO(data.hourly.time);
+                document.getElementById('miseajour').textContent = 'Mise à jour : ' + convertISO(data.current_weather.time);
+            }))
+}
+setTimeout(apiMeteo,100)
 // function propability(pourcent) {
 //     for (const iterator of object) {
-        
+
 //     }
 // }
-        
+
 function weathercode(code) {
     let result
     if (code < 1) {
@@ -131,30 +136,30 @@ function weathercode(code) {
     else { result = 'Inconnue' }
     return result
 }
-function temperature (degre){
+function temperature(degre) {
     let result
-    if (degre < 5 ) {
+    if (degre < 5) {
         result = degre
         // card.style.border = "rgb(135, 212, 226) 10px solid";
         // body.style.backgroundColor = "rgb(135, 212, 226)";
     }
 
-    else if (degre > 5 && degre < 14 ) {
+    else if (degre > 5 && degre < 14) {
         result = degre
         // card.style.border = "rgb(79, 169, 185) 10px solid";
         // body.style.backgroundColor = "rgb(79, 169, 185)";
     }
-    else if (degre > 15 && degre < 18 ) {
+    else if (degre > 15 && degre < 18) {
         result = degre
         // card.style.border = "rgb(209, 133, 40) 10px solid";
         // body.style.backgroundColor = "rgb(209, 133, 40)";
     }
-    else if (degre > 19 ) {
+    else if (degre > 19) {
         result = degre
         // card.style.border = "rgb(232, 29, 22) 10px solid"
         // body.style.backgroundColor = "rgb(232, 29, 22)"
     }
-    else  { result = degre}
+    else { result = degre }
     return result
 }
 
@@ -218,8 +223,22 @@ function convertISO(time) {
     return result
 }
 
-fetch('https://api.open-meteo.com/v1/forecast?latitude=28.00&longitude=17.00&current_weather=true&timezone=auto&=hourly=time')
-    .then((resp) => resp.json()
-        .then((data) => {
+// ---------------------------------------------------------horloge-------------------------------------
+window.onload = function () {
+    horloge('div_horloge');
+};
 
-        }));
+function horloge(el) {
+    if (typeof el == "string") { el = document.getElementById(el); }
+    function actualiser() {
+        let date = new Date();
+        let str = date.getHours();
+        str += ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+        str += ':' + (date.getSeconds() < 10 ? '0' : '') + date.getSeconds();
+        el.textContent = str;
+    }
+    actualiser();
+    setInterval(actualiser, 1000);
+    
+}
+
