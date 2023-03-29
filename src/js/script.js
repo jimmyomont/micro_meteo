@@ -7,7 +7,7 @@ const temp = document.getElementById('temp')
 const weatherCode = document.getElementById('coverage')
 const rain = document.getElementById('rain')
 const now = new Date()
-const fuseauH = document.getElementById('fuseau')
+const fuseauHoraire = document.getElementById('fuseau')
 const heure = now.getHours()
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -21,7 +21,7 @@ function coordonnees() {
         nb++;
     }
     document.getElementById('location').textContent = xy[nb].city;
-    fuseauH.textContent = xy[nb].fuseau;
+    fuseauHoraire.textContent = new Intl.DateTimeFormat('fr', { timeStyle: 'long', timeZone: xy[nb].fuseau }).format(new Date())
     let x = xy[nb].x;
     let y = xy[nb].y;
     apiMeteo(x, y)
