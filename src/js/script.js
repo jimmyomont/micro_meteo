@@ -1,4 +1,4 @@
-// http://erikflowers.github.io/weather-icons 
+
 import weathercode from './weatherCode'
 import xy from './dataCoordonnees'
 import oneDirection from './winDirection'

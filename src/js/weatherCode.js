@@ -1,12 +1,23 @@
-
+// http://erikflowers.github.io/weather-icons 
 function weathercode(code) {
     let result
     if (code < 1) {
         result = "Ciel clair"
         icon.className = 'wi wi-day-sunny'
     }
-    else if (code > 0 && code < 4) {
+
+    else if (code === 1) {
+        result = "Dégagé"
+        icon.className = 'wi wi-day-sunny-overcast'
+    }
+
+    else if (code === 2) {
         result = "Nuageux"
+        icon.className = 'wi wi-day-cloudy'
+    }
+    
+    else if (code === 3) {
+        result = "Couvert"
         icon.className = 'wi wi-cloud'
     }
     else if (code > 44 && code < 49) {
