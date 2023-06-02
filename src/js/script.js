@@ -31,7 +31,6 @@ let apiMeteo = function (x, y) {
     fetch('https://api.open-meteo.com/v1/forecast?latitude=' + x + '&longitude=' + y + '&current_weather=true&timezone=auto&timezone=auto&hourly=precipitation_probability&forecast_days=1&timezone=auto')
         .then((resp) => resp.json()
             .then((data) => {
-
                 temp.textContent = data.current_weather.temperature + " °C";
                 weatherCode.textContent = weathercode(data.current_weather.weathercode);
                 document.getElementById('wind').textContent = data.current_weather.windspeed;
@@ -57,5 +56,5 @@ function myHorloge() {
     const test = Intl.DateTimeFormat({timeZone:'Australia/Sydney' }).format(testt)
     console.log(test);
 }
-myHorloge()
 setInterval(myHorloge, 1000);
+myHorloge()

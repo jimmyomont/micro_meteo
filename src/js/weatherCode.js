@@ -5,12 +5,10 @@ function weathercode(code) {
         result = "Ciel clair"
         icon.className = 'wi wi-day-sunny'
     }
-
     else if (code === 1) {
         result = "Dégagé"
         icon.className = 'wi wi-day-sunny-overcast'
     }
-
     else if (code === 2) {
         result = "Nuageux"
         icon.className = 'wi wi-day-cloudy'
